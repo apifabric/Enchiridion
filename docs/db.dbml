@@ -1,0 +1,111 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table BehavioralPattern {
+    id INTEGER [primary key]
+    pattern_type VARCHAR 
+    description TEXT 
+    }
+
+Table Business {
+    id INTEGER [primary key]
+    name VARCHAR 
+    address VARCHAR 
+    zip_code VARCHAR 
+    category VARCHAR 
+    }
+
+Table BusinessInsight {
+    id INTEGER [primary key]
+    business_id INTEGER 
+    insight_id INTEGER 
+    }
+
+Table Insight {
+    id INTEGER [primary key]
+    neighborhood_id INTEGER 
+    insight_type VARCHAR 
+    detail TEXT 
+    }
+
+Table ConsumerPreference {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    preference VARCHAR 
+    weight FLOAT 
+    }
+
+Table User {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    join_date DATETIME 
+    }
+
+Table Event {
+    id INTEGER [primary key]
+    title VARCHAR 
+    date DATETIME 
+    neighborhood_id INTEGER 
+    }
+
+Table Neighborhood {
+    id INTEGER [primary key]
+    name VARCHAR 
+    zip_code VARCHAR 
+    city VARCHAR 
+    population INTEGER 
+    }
+
+Table PreferenceCategory {
+    id INTEGER [primary key]
+    category_name VARCHAR 
+    }
+
+Table Report {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    content TEXT 
+    generated_on DATETIME 
+    }
+
+Table Story {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    title VARCHAR 
+    narrative TEXT 
+    }
+
+Table UserInteraction {
+    id INTEGER [primary key]
+    user_id INTEGER 
+    interaction_type VARCHAR 
+    timestamp DATETIME 
+    }
+
+Table ZipCodeDatum {
+    id INTEGER [primary key]
+    zip_code VARCHAR 
+    population_density FLOAT 
+    average_income FLOAT 
+    }
+
+Table ZipCodeReport {
+    id INTEGER [primary key]
+    zip_code_data_id INTEGER 
+    report_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: BusinessInsight.(business_id) < Business.(id)
+    Ref: BusinessInsight.(insight_id) < Insight.(id)
+    Ref: Insight.(neighborhood_id) < Neighborhood.(id)
+    Ref: ConsumerPreference.(user_id) < User.(id)
+    Ref: Event.(neighborhood_id) < Neighborhood.(id)
+    Ref: Report.(user_id) < User.(id)
+    Ref: Story.(user_id) < User.(id)
+    Ref: UserInteraction.(user_id) < User.(id)
+    Ref: ZipCodeReport.(report_id) < Report.(id)
+    Ref: ZipCodeReport.(zip_code_data_id) < ZipCodeDatum.(id)

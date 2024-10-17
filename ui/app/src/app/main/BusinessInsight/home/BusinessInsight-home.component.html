@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="BusinessInsight" mode="tab" title="BUSINESSINSIGHT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="BusinessInsightTable" 
+            service="BusinessInsight" 
+            entity="BusinessInsight" 
+            title="BUSINESSINSIGHT"
+            keys="id"
+            columns="id;business_id;insight_id" 
+            header-actions="R;D"
+            visible-columns="id;business_id;insight_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="business_id" title="business_id">
+    <o-table-cell-renderer-service attr="business_id" 
+        service="Business" entity="BusinessType" columns="id;name"
+        parent-keys="id:business_id"
+        value-column="name" keys="business_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="insight_id" title="insight_id">
+    <o-table-cell-renderer-service attr="insight_id" 
+        service="Insight" entity="InsightType" columns="id;id"
+        parent-keys="id:insight_id"
+        value-column="id" keys="insight_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

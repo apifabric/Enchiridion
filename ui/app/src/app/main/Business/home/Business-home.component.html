@@ -1,0 +1,39 @@
+<o-form-layout-manager attr="Business" mode="tab" title="BUSINESS">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="BusinessTable" 
+            service="Business" 
+            entity="Business" 
+            title="BUSINESS"
+            keys="id"
+            columns="name;address;zip_code;category;id" 
+            header-actions="R;D"
+            visible-columns="name;address;zip_code;category;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #address attr="address" title="address" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #zip_code attr="zip_code" title="zip_code" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #category attr="category" title="category" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

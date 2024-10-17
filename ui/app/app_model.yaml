@@ -1,0 +1,530 @@
+about:
+  date: October 17, 2024 13:24:34
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  BehavioralPattern:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: TEXT
+    - name: pattern_type
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table representing behavioral patterns in different communities.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Table representing behavioral patterns in different communities.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: BehavioralPattern
+  Business:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: address
+      template: text
+      type: VARCHAR
+    - name: zip_code
+      template: text
+      type: VARCHAR
+    - name: category
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table representing businesses within neighborhoods.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table representing businesses within neighborhoods.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - business_id
+      name: BusinessInsightList
+      resource: BusinessInsight
+    type: Business
+  BusinessInsight:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: business_id
+      template: integer
+      type: INTEGER
+    - name: insight_id
+      template: integer
+      type: INTEGER
+    description: Table linking businesses with specific insights.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table linking businesses with specific insights.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - business_id
+      name: business
+      resource: Business
+    - direction: toone
+      fks:
+      - insight_id
+      name: insight
+      resource: Insight
+    type: BusinessInsight
+  ConsumerPreference:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: preference
+      template: text
+      type: VARCHAR
+    - name: weight
+      template: real
+      type: FLOAT
+    description: Table for storing consumer preferences for analysis.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for storing consumer preferences for analysis.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: ConsumerPreference
+  Event:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: neighborhood_id
+      template: integer
+      type: INTEGER
+    - name: title
+      template: text
+      type: VARCHAR
+    - name: date
+      template: date
+      type: DATETIME
+    description: Table representing events capturing significant occurrences in communities.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table representing events capturing significant occurrences in communities.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - neighborhood_id
+      name: neighborhood
+      resource: Neighborhood
+    type: Event
+  Insight:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: neighborhood_id
+      template: integer
+      type: INTEGER
+    - name: insight_type
+      template: text
+      type: VARCHAR
+    - name: detail
+      template: text
+      type: TEXT
+    description: Table for storing generated insights.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for storing generated insights.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - insight_id
+      name: BusinessInsightList
+      resource: BusinessInsight
+    - direction: toone
+      fks:
+      - neighborhood_id
+      name: neighborhood
+      resource: Neighborhood
+    type: Insight
+  Neighborhood:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: zip_code
+      template: text
+      type: VARCHAR
+    - name: city
+      template: text
+      type: VARCHAR
+    - name: population
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table containing data about neighborhoods.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table containing data about neighborhoods.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - neighborhood_id
+      name: EventList
+      resource: Event
+    - direction: tomany
+      fks:
+      - neighborhood_id
+      name: InsightList
+      resource: Insight
+    type: Neighborhood
+  PreferenceCategory:
+    columns:
+    - label: ' category_name*'
+      name: category_name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for categorizing different consumer preferences.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: category_name
+    home_template: home_template.html
+    info_list: Table for categorizing different consumer preferences.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: PreferenceCategory
+  Report:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: content
+      template: text
+      type: TEXT
+    - name: generated_on
+      template: date
+      type: DATETIME
+    description: Table for generating and storing custom reports.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for generating and storing custom reports.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - report_id
+      name: ZipCodeReportList
+      resource: ZipCodeReport
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Report
+  Story:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: title
+      template: text
+      type: VARCHAR
+    - name: narrative
+      template: text
+      type: TEXT
+    description: Table for generating custom storytelling elements in reports.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for generating custom storytelling elements in reports.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Story
+  User:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: join_date
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Table for storing user information.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Table for storing user information.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: ConsumerPreferenceList
+      resource: ConsumerPreference
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - user_id
+      name: StoryList
+      resource: Story
+    - direction: tomany
+      fks:
+      - user_id
+      name: UserInteractionList
+      resource: UserInteraction
+    type: User
+  UserInteraction:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: user_id
+      template: integer
+      type: INTEGER
+    - name: interaction_type
+      template: text
+      type: VARCHAR
+    - name: timestamp
+      template: date
+      type: DATETIME
+    description: Table for recording user interactions with the platform.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table for recording user interactions with the platform.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: UserInteraction
+  ZipCodeDatum:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: zip_code
+      template: text
+      type: VARCHAR
+    - name: population_density
+      template: real
+      type: FLOAT
+    - name: average_income
+      template: real
+      type: FLOAT
+    description: Table storing aggregated data related to specific ZIP codes.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table storing aggregated data related to specific ZIP codes.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - zip_code_data_id
+      name: ZipCodeReportList
+      resource: ZipCodeReport
+    type: ZipCodeDatum
+  ZipCodeReport:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: report_id
+      template: integer
+      type: INTEGER
+    - name: zip_code_data_id
+      template: integer
+      type: INTEGER
+    description: Table linking specific ZIP codes to reports.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Table linking specific ZIP codes to reports.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - report_id
+      name: report
+      resource: Report
+    - direction: toone
+      fks:
+      - zip_code_data_id
+      name: zip_code_data
+      resource: ZipCodeDatum
+    type: ZipCodeReport
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

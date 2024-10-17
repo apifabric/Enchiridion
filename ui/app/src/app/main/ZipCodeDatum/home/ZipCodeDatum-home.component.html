@@ -1,0 +1,37 @@
+<o-form-layout-manager attr="ZipCodeDatum" mode="tab" title="ZIPCODEDATUM">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ZipCodeDatumTable" 
+            service="ZipCodeDatum" 
+            entity="ZipCodeDatum" 
+            title="ZIPCODEDATUM"
+            keys="id"
+            columns="id;zip_code;population_density;average_income" 
+            header-actions="R;D"
+            visible-columns="id;zip_code;population_density;average_income"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #zip_code attr="zip_code" title="zip_code" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column #population_density attr="population_density" title="population_density" type="real" min-decimal-digits="2" max-decimal-digits="4" min="0" max="1000000.0000" content-align="center"></o-table-column>
+            
+            <o-table-column #average_income attr="average_income" title="average_income" type="real" min-decimal-digits="2" max-decimal-digits="4" min="0" max="1000000.0000" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

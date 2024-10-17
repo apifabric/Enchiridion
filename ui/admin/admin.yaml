@@ -1,0 +1,332 @@
+about:
+  date: October 17, 2024 13:24:34
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 10
+  number_tables: 14
+info_toggle_checked: true
+resources:
+  BehavioralPattern:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: pattern_type
+    - name: id
+    description: Table representing behavioral patterns in different communities.
+    info_list: Table representing behavioral patterns in different communities.
+    type: BehavioralPattern
+    user_key: description
+  Business:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: address
+    - name: zip_code
+    - name: category
+    - name: id
+    description: Table representing businesses within neighborhoods.
+    info_list: Table representing businesses within neighborhoods.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - business_id
+      name: BusinessInsightList
+      resource: BusinessInsight
+    type: Business
+    user_key: name
+  BusinessInsight:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: business_id
+    - name: insight_id
+    description: Table linking businesses with specific insights.
+    info_list: Table linking businesses with specific insights.
+    tab_groups:
+    - direction: toone
+      fks:
+      - business_id
+      name: business
+      resource: Business
+    - direction: toone
+      fks:
+      - insight_id
+      name: insight
+      resource: Insight
+    type: BusinessInsight
+    user_key: id
+  ConsumerPreference:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: user_id
+    - name: preference
+    - name: weight
+    description: Table for storing consumer preferences for analysis.
+    info_list: Table for storing consumer preferences for analysis.
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: ConsumerPreference
+    user_key: id
+  Event:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: neighborhood_id
+    - name: title
+    - name: date
+    description: Table representing events capturing significant occurrences in communities.
+    info_list: Table representing events capturing significant occurrences in communities.
+    tab_groups:
+    - direction: toone
+      fks:
+      - neighborhood_id
+      name: neighborhood
+      resource: Neighborhood
+    type: Event
+    user_key: id
+  Insight:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: neighborhood_id
+    - name: insight_type
+    - name: detail
+    description: Table for storing generated insights.
+    info_list: Table for storing generated insights.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - insight_id
+      name: BusinessInsightList
+      resource: BusinessInsight
+    - direction: toone
+      fks:
+      - neighborhood_id
+      name: neighborhood
+      resource: Neighborhood
+    type: Insight
+    user_key: id
+  Neighborhood:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: zip_code
+    - name: city
+    - name: population
+    - name: id
+    description: Table containing data about neighborhoods.
+    info_list: Table containing data about neighborhoods.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - neighborhood_id
+      name: EventList
+      resource: Event
+    - direction: tomany
+      fks:
+      - neighborhood_id
+      name: InsightList
+      resource: Insight
+    type: Neighborhood
+    user_key: name
+  PreferenceCategory:
+    attributes:
+    - label: ' category_name*'
+      name: category_name
+      search: true
+      sort: true
+    - name: id
+    description: Table for categorizing different consumer preferences.
+    info_list: Table for categorizing different consumer preferences.
+    type: PreferenceCategory
+    user_key: category_name
+  Report:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: user_id
+    - name: content
+    - name: generated_on
+    description: Table for generating and storing custom reports.
+    info_list: Table for generating and storing custom reports.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - report_id
+      name: ZipCodeReportList
+      resource: ZipCodeReport
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Report
+    user_key: id
+  Story:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: user_id
+    - name: title
+    - name: narrative
+    description: Table for generating custom storytelling elements in reports.
+    info_list: Table for generating custom storytelling elements in reports.
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: Story
+    user_key: id
+  User:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: email
+    - name: join_date
+    - name: id
+    description: Table for storing user information.
+    info_list: Table for storing user information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - user_id
+      name: ConsumerPreferenceList
+      resource: ConsumerPreference
+    - direction: tomany
+      fks:
+      - user_id
+      name: ReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - user_id
+      name: StoryList
+      resource: Story
+    - direction: tomany
+      fks:
+      - user_id
+      name: UserInteractionList
+      resource: UserInteraction
+    type: User
+    user_key: name
+  UserInteraction:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: user_id
+    - name: interaction_type
+    - name: timestamp
+    description: Table for recording user interactions with the platform.
+    info_list: Table for recording user interactions with the platform.
+    tab_groups:
+    - direction: toone
+      fks:
+      - user_id
+      name: user
+      resource: User
+    type: UserInteraction
+    user_key: id
+  ZipCodeDatum:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: zip_code
+    - name: population_density
+    - name: average_income
+    description: Table storing aggregated data related to specific ZIP codes.
+    info_list: Table storing aggregated data related to specific ZIP codes.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - zip_code_data_id
+      name: ZipCodeReportList
+      resource: ZipCodeReport
+    type: ZipCodeDatum
+    user_key: id
+  ZipCodeReport:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: report_id
+    - name: zip_code_data_id
+    description: Table linking specific ZIP codes to reports.
+    info_list: Table linking specific ZIP codes to reports.
+    tab_groups:
+    - direction: toone
+      fks:
+      - report_id
+      name: report
+      resource: Report
+    - direction: toone
+      fks:
+      - zip_code_data_id
+      name: zip_code_data
+      resource: ZipCodeDatum
+    type: ZipCodeReport
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

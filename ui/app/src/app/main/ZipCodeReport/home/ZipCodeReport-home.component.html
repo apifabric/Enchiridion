@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="ZipCodeReport" mode="tab" title="ZIPCODEREPORT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ZipCodeReportTable" 
+            service="ZipCodeReport" 
+            entity="ZipCodeReport" 
+            title="ZIPCODEREPORT"
+            keys="id"
+            columns="id;report_id;zip_code_data_id" 
+            header-actions="R;D"
+            visible-columns="id;report_id;zip_code_data_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="report_id" title="report_id">
+    <o-table-cell-renderer-service attr="report_id" 
+        service="Report" entity="ReportType" columns="id;id"
+        parent-keys="id:report_id"
+        value-column="id" keys="report_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="zip_code_data_id" title="zip_code_data_id">
+    <o-table-cell-renderer-service attr="zip_code_data_id" 
+        service="ZipCodeDatum" entity="ZipCodeDatumType" columns="id;id"
+        parent-keys="id:zip_code_data_id"
+        value-column="id" keys="zip_code_data_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
